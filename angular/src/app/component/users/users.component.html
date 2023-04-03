@@ -1,0 +1,75 @@
+<div class="container">
+
+  <table class="table table-info table-striped table-hover mt-4">
+    <thead style="background-color: teal;">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users;let i = index ">
+        <td scope="row">{{i+1}}</td>
+        <td>{{user.firstName+" "+user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.number}}</td>
+        <td>
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-primary mx-2" (click)="edituser(user)" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
+            <i class="fa-solid fa-pen-to-square"></i>
+          </button>
+          <button class="btn btn-danger" (click)="deleteUser(user._id)"><i class="fa-solid fa-trash-can"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Update details</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateForm" >
+          <div class="row mb-4">
+            <div class="col">
+              <div class="form-outline">
+                <label class="form-label" for="form3Example1">First name</label>
+                <input formControlName="firstName" type="text" id="form3Example1" class="form-control border-bottom" />
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline">
+                <label class="form-label" for="form3Example2">Last name</label>
+                <input formControlName="lastName" type="text" id="form3Example2" class="form-control border-bottom" />
+              </div>
+            </div>
+          </div>
+             <!-- Email input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Email address</label>
+          <input formControlName="email" type="email" id="form3Example3" class="form-control border-bottom" />
+        </div>
+        <!-- phone number -->
+        <div class="form-outline mb-2">
+          <label class="form-label" for="form6Example6">Phone</label>
+          <input formControlName="number" type="text" id="form6Example6" class="form-control border-bottom" />
+        </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="cancel" data-mdb-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" (click)='updateUser(this.edituserdata,updateForm.value)'>Update</button>
+      </div>
+    </div>
+  </div>
+</div>

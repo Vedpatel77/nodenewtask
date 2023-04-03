@@ -1,0 +1,18 @@
+.navbar{
+    background-color: teal;
+}
+/* .navbar-nav{
+    margin: 0px;
+    padding: 0px;
+} */
+.navbar-brand{
+    color: gold;
+}
+.navbar-nav li a{
+    color: aliceblue;
+}
+.navbar-nav li a:hover{
+    color:black;
+    text-shadow: 2px 2px 5px white;
+    font-weight: 500;
+}

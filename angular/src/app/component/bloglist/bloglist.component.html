@@ -1,0 +1,71 @@
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-lg-7">
+
+        </div>
+    </div>
+</div> -->
+<div class="container">
+    <h1 class="text-center mt-5 mb-5 text-decoration-underline">Today's famous Blogs</h1>
+    <div *ngFor="let blog of blogdata" class="row mt-3 blog">
+        <div class="col-lg-3 col-md-4 col-sm-12 mb-3 ">
+            <img style="width: 200px;height: 134px;" src="{{blog.imageUrl}}" />
+        </div>
+        <div class="col-lg-7 col-md-8 col-sm-12">
+            <h3 (click)="viewblog(blog)">
+                {{blog.blogTitle}}</h3>
+            <h4 class="text-secondary">{{blog.blogsummary}}</h4>
+        </div>
+
+        <div class="col-lg-2 col-md-12 col-sm-12">
+            <button type="button" class="btn btn-primary mx-2" data-mdb-toggle="modal" data-mdb-target="#exampleModal"
+                (click)="editblog(blog)">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button class="btn btn-danger" (click)="deleteblog(blog)"><i class="fa-solid fa-trash-can"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Update Blog</h5>
+                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="updateBlogForm">
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form6Example3">Enter Blog Title</label>
+                        <input formControlName="blogTitle" type="text" id="form6Example3" class="form-control border" />
+                    </div>
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form6Example3">Enter Blog Summary</label>
+                        <input formControlName="blogsummary" type="text" id="form6Example3"
+                            class="form-control border" />
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <label class="form-label" for="form6Example7">Enter Blog Description</label>
+                        <textarea formControlName="blogDescription" class="form-control border" id="form6Example7"
+                            rows="4"></textarea>
+                    </div>
+                    <!-- phone number -->
+                    <div class="form-outline mb-2">
+                        <label class="form-label" for="form6Example6">Image Url</label>
+                        <input formControlName="imageUrl" type="text" id="form6Example6"
+                            class="form-control border-bottom" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel" data-mdb-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary"
+                    (click)='updateBlog(this.editblogdataid,updateBlogForm.value)'>Update</button>
+            </div>
+        </div>
+    </div>
+</div>
