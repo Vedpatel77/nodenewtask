@@ -8,15 +8,16 @@ import { RegisterComponent } from './component/register/register.component';
 import { ViewuerComponent } from './component/viewuer/viewuer.component';
 import { BloglistComponent } from './component/bloglist/bloglist.component';
 import { ViewblogComponent } from './component/viewblog/viewblog.component';
+import { CanactivateGuard } from './guard/canactivate.guard';
 
 const routes: Routes = [
   {path:'',redirectTo:'home',pathMatch:'full'},
   {path:'home',component:HomeComponent},
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
-  {path:'users',component:UsersComponent},
+  {path:'users',component:UsersComponent,canActivate:[CanactivateGuard]},
   {path:'users/:id',component:ViewuerComponent},
-  {path:'blogslist',component:BloglistComponent},
+  {path:'blogslist',component:BloglistComponent,canActivate:[CanactivateGuard]},
   {path:'viewblog',component:ViewblogComponent},
   {path:'blogs/addblog',component:BlogsComponent}
 ];

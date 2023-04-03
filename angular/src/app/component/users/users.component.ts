@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class UsersComponent implements OnInit {
   users:any;
   edituserdata:any;
+  data:any;
+  Odata:any;
   constructor(private http:HttpClient , private Router : Router){}
 ngOnInit(): void {
   this.getusers();
@@ -23,6 +25,16 @@ updateForm = new FormGroup({
   email:new FormControl(''),
   number:new FormControl(''), 
 })
+
+   isadmin(){
+    this.data = sessionStorage.getItem('user');
+    this.Odata = JSON.parse(this.data);
+    if(this.Odata.role == "admin"){
+      return true;
+    }else{
+      return false;
+    }
+   }
 
   getusers(){
     this.http.get('http://localhost:3000/tabledata').subscribe((res)=>{

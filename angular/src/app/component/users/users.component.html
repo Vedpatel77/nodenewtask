@@ -7,7 +7,7 @@
         <th scope="col">Name</th>
         <th scope="col">Email</th>
         <th scope="col">Phone</th>
-        <th scope="col">Action</th>
+        <th scope="col" *ngIf="isadmin()">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -16,7 +16,7 @@
         <td>{{user.firstName+" "+user.lastName}}</td>
         <td>{{user.email}}</td>
         <td>{{user.number}}</td>
-        <td>
+        <td *ngIf="isadmin()">
           <!-- Button trigger modal -->
           <button type="button" class="btn btn-primary mx-2" (click)="edituser(user)" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
             <i class="fa-solid fa-pen-to-square"></i>

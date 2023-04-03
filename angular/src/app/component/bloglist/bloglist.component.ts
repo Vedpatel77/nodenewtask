@@ -12,6 +12,8 @@ import { Router } from '@angular/router';
 export class BloglistComponent implements OnInit{
 blogdata:any;
 editblogdataid:any;
+  Odata: any;
+  data: any;
 //   constructor(private router: Router) {
 //     this.blogdata =this.router.getCurrentNavigation()?.extras.state // should log out 'bar'
 //   }
@@ -34,6 +36,17 @@ getblogs(){
   
   })
 }
+
+isadmin(){
+  this.data = sessionStorage.getItem('user');
+  this.Odata = JSON.parse(this.data);
+  if(this.Odata.role == "admin"){
+    return true;
+  }else{
+    return false;
+  }
+ }
+
 editblog(blog:any){
   // console.log(blog);
   

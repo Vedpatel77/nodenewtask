@@ -28,5 +28,6 @@ blogd:any;
         // this.router.navigate(['/blogslist'], { state: { blogs: this.blogd } });
       });
   }
+ 
 
 }
