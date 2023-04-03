@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NodeService } from 'src/app/service/node.service';
 
 @Component({
   selector: 'app-viewuer',
@@ -11,15 +12,14 @@ export class ViewuerComponent implements OnInit {
   public data:any;
   public userId: any;
 
-  constructor(route: ActivatedRoute, private http:HttpClient) {
+  constructor(private route: ActivatedRoute, public service:NodeService) {
     route.params.subscribe((params) => {
       this.userId = params["id"];
     });
   }
   ngOnInit(): void {
-    this.http.get(`http://localhost:3000/users/${this.userId }`).subscribe((res)=>{
+    this.service.viewuser(this.userId).subscribe((res)=>{
       this.data=res;
-      // console.log(this.data);
     })
   }
 }

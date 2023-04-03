@@ -12,31 +12,27 @@ import { NodeService } from 'src/app/service/node.service';
 })
 export class LoginComponent {
 
-  constructor(public http: HttpClient,private route :Router){}
+  constructor(public service:NodeService,private route :Router){}
   data:any=[];
   loginform = new FormGroup({
   email:new FormControl(''),
   password:new FormControl('')
 })
 
-
-
    postlogindata(Data:any){
-    this.http.post('http://localhost:3000/login',Data , { withCredentials: true }).subscribe((res)=>{
-      console.log(res);
-      this.data = [res]
-      console.log(this.data.length);
-
-  if (this.data.length==1) {
-    alert("login successful!");
-    
-    // sessionStorage
-    sessionStorage.setItem("user",JSON.stringify(this.data[0]));
-    this.route.navigate(['/home']);
-  } else {
-    alert("invalid login credential!"); 
-    this.route.navigate(['/login']);
-  }
-    })
+    this.service.login(Data);
+  //   this.http.post('http://localhost:3000/login',Data , { withCredentials: true }).subscribe((res)=>{
+  //     console.log(res);
+  //     this.data = [res]
+  //     console.log(this.data.length);
+  // if (this.data.length==1) {
+  //   alert("login successful!");
+  //   sessionStorage.setItem("user",JSON.stringify(this.data[0]));
+  //   this.route.navigate(['/home']);
+  // } else {
+  //   alert("invalid login credential!"); 
+  //   this.route.navigate(['/login']);
+  // }
+  //   })
    }
 }

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NodeService } from 'src/app/service/node.service';
 // import { AgGridAngular } from 'ag-grid-angular';
 // import { CellClickedEvent, ColDef, GridReadyEvent } from 'ag-grid-community';
 @Component({
@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   edituserdata:any;
   data:any;
   Odata:any;
-  constructor(private http:HttpClient , private Router : Router){}
+  constructor(public service:NodeService, private Router : Router){}
 ngOnInit(): void {
   this.getusers();
 }
@@ -37,9 +37,8 @@ updateForm = new FormGroup({
    }
 
   getusers(){
-    this.http.get('http://localhost:3000/tabledata').subscribe((res)=>{
+    this.service.getuser().subscribe((res)=>{
       console.log(res);
-      
       this.users=res;
     });
   }
@@ -54,7 +53,7 @@ updateForm = new FormGroup({
   }
   
   updateUser(id:any,data:any){
-    this.http.patch(`http://localhost:3000/users/${id}`,data).subscribe(( res)=>{
+    this.service.updateuser(id,data).subscribe(( res)=>{
     }); 
     let ref=document.getElementById('cancel');
       ref?.click();
@@ -63,8 +62,7 @@ updateForm = new FormGroup({
   }
 
   deleteUser(id:any){
-    this.http.delete(`http://localhost:3000/users/${id}`).subscribe(( res)=>{
-      console.log(res);
+    this.service.deleteuser(id).subscribe(( res)=>{
       this.getusers();
     });
   }

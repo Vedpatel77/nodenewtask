@@ -12,8 +12,7 @@ export class NavbarComponent{
   Data : any;
   id : any;
   islogedin: any; 
-  // user: any;
-  constructor(private Router : Router,private http:HttpClient,private service:NodeService){}
+  constructor(private Router : Router,public service:NodeService){}
 
   viewUser(){
     this.Data = sessionStorage.getItem('user');
@@ -23,15 +22,16 @@ export class NavbarComponent{
     this.Router.navigate(['/users/' + this.id._id]);  
   }
   logout(){
-    this.Data = sessionStorage.getItem('user');
-    this.id = JSON.parse(this.Data)
-    this.http.get('http://localhost:3000/logout',{
-      withCredentials : true
-    }).subscribe((res)=>{
-      console.log(res);
-    });
-    sessionStorage.clear();
-    this.Router.navigate(['/login']);
+    this.service.logout();
+    // this.Data = sessionStorage.getItem('user');
+    // this.id = JSON.parse(this.Data)
+    // this.http.get('http://localhost:3000/logout',{
+    //   withCredentials : true
+    // }).subscribe((res)=>{
+    //   console.log(res);
+    // });
+    // sessionStorage.clear();
+    // this.Router.navigate(['/login']);
   }
 
   islog(){

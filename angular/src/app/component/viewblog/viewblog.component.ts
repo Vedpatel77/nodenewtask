@@ -10,7 +10,6 @@ export class ViewblogComponent {
   blogdata:any;
     constructor(private router: Router) {
     this.blogdata =this.router.getCurrentNavigation()?.extras.state // should log out 'bar'
-    console.log(this.blogdata);
     
   }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NodeService } from 'src/app/service/node.service';
 // import { Router } from '@angular/router';
 
 @Component({
@@ -14,13 +15,11 @@ blogdata:any;
 editblogdataid:any;
   Odata: any;
   data: any;
-//   constructor(private router: Router) {
-//     this.blogdata =this.router.getCurrentNavigation()?.extras.state // should log out 'bar'
-//   }
+
 ngOnInit(): void {
   this.getblogs();
 }
-constructor(private http:HttpClient,private route:Router){}
+constructor(public service:NodeService,private route:Router){}
 
 updateBlogForm = new FormGroup({
   blogTitle : new FormControl(''),
@@ -30,7 +29,7 @@ updateBlogForm = new FormGroup({
 })
 
 getblogs(){
-  this.http.get('http://localhost:3000/blogdata').subscribe((res)=>{
+  this.service.getblog().subscribe((res)=>{
     // console.log(res);
   this.blogdata=res;
   
@@ -57,19 +56,15 @@ editblog(blog:any){
   this.updateBlogForm.controls['imageUrl'].setValue(blog.imageUrl);
 }
 updateBlog(id:any,blog:any){
-  // console.log(id);
-  // console.log(blog);
   
-  
-  this.http.patch(`http://localhost:3000/blogdata/${id}`,blog).subscribe(( res)=>{
+  this.service.updateblog(id,blog).subscribe(( res)=>{
     this.getblogs();
   }); 
   let ref=document.getElementById('cancel');
     ref?.click();
 }
 deleteblog(blog:any){
-   this.http.delete('http://localhost:3000/blogdata'+'/'+blog._id).subscribe((res)=>{
-    console.log(res);
+   this.service.deleteblog(blog).subscribe((res)=>{
     this.getblogs();
     
    })

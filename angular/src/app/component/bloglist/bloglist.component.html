@@ -9,7 +9,7 @@
     <h1 class="text-center mt-5 mb-5 text-decoration-underline">Today's famous Blogs</h1>
     <div *ngFor="let blog of blogdata" class="row mt-3 blog">
         <div class="col-lg-3 col-md-4 col-sm-12 mb-3 ">
-            <img style="width: 200px;height: 134px;" src="{{blog.imageUrl}}" />
+            <img class="image" src="{{blog.imageUrl}}" />
         </div>
         <div class="col-lg-7 col-md-8 col-sm-12">
             <h3 (click)="viewblog(blog)">
