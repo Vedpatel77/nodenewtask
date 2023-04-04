@@ -12,10 +12,12 @@ import { HomeComponent } from './component/home/home.component';
 import { RegisterComponent } from './component/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from "@angular/common/http";
-import { AgGridModule } from 'ag-grid-angular';
 import { ViewuerComponent } from './component/viewuer/viewuer.component';
 import { BloglistComponent } from './component/bloglist/bloglist.component';
 import { ViewblogComponent } from './component/viewblog/viewblog.component';
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,7 @@ import { ViewblogComponent } from './component/viewblog/viewblog.component';
     NoopAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AgGridModule
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

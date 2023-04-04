@@ -8,35 +8,43 @@
               <input formControlName="firstName" type="text" id="form3Example1" class="form-control border-bottom" />
               <label class="form-label" for="form3Example1">First name</label>
             </div>
+        <span class="text-danger" *ngIf="firstName && firstName.invalid && firstName.touched">*This feild is required</span>
+
           </div>
           <div class="col-xl-6 col-md-6 col-sm-12">
             <div class="form-outline">
               <input formControlName="lastName" type="text" id="form3Example2" class="form-control border-bottom" />
               <label class="form-label" for="form3Example2">Last name</label>
             </div>
+        <span class="text-danger" *ngIf="lastName && lastName.invalid && lastName.touched">*This feild is required</span>
+
           </div>
         </div>
       
         <!-- Email input -->
-        <div class="form-outline mb-2">
+        <div class="form-outline mt-2">
           <input formControlName="email" type="email" id="form3Example3" class="form-control border-bottom" />
           <label class="form-label" for="form3Example3">Email address</label>
         </div>
+        <span class="text-danger" *ngIf="email && email.invalid && email.touched">*This feild is required</span>
         <!-- phone number -->
-        <div class="form-outline mb-2">
+        <div class="form-outline mt-2">
           <input formControlName="number" type="text" id="form6Example6" class="form-control border-bottom" />
           <label class="form-label" for="form6Example6">Phone</label>
         </div>
+        <span class="text-danger" *ngIf="number && number.invalid && number.touched">*This feild is required</span>
+
       
         <!-- Password input -->
-        <div class="form-outline mb-2">
+        <div class="form-outline mt-2">
           <input formControlName="password" type="password" id="form3Example4" class="form-control border-bottom" />
           <label class="form-label" for="form3Example4">Password</label>
         </div>
-      
+        <span class="text-danger" *ngIf="password && password.invalid && password.touched">*This feild is required</span>
+        
       
         <!-- Submit button -->
-        <button type="submit" class="btn btn-block mb-4">Sign up</button>
+        <button type="submit" class="btn btn-block mt-3 mb-4">Sign up</button>
       
         <!-- Register buttons -->
        

@@ -1,6 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NodeService } from 'src/app/service/node.service';
 
@@ -10,29 +9,29 @@ import { NodeService } from 'src/app/service/node.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   constructor(public service:NodeService,private route :Router){}
+
+  ngOnInit(): void {
+    
+  }
+
+
   data:any=[];
   loginform = new FormGroup({
-  email:new FormControl(''),
-  password:new FormControl('')
+  email:new FormControl('',[Validators.required]),
+  password:new FormControl('',[Validators.required])
 })
+
+get email(){
+  return this.loginform.get('email');
+}
+get password(){
+  return this.loginform.get('password');
+}
 
    postlogindata(Data:any){
     this.service.login(Data);
-  //   this.http.post('http://localhost:3000/login',Data , { withCredentials: true }).subscribe((res)=>{
-  //     console.log(res);
-  //     this.data = [res]
-  //     console.log(this.data.length);
-  // if (this.data.length==1) {
-  //   alert("login successful!");
-  //   sessionStorage.setItem("user",JSON.stringify(this.data[0]));
-  //   this.route.navigate(['/home']);
-  // } else {
-  //   alert("invalid login credential!"); 
-  //   this.route.navigate(['/login']);
-  // }
-  //   })
    }
 }

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const User = require('../db/model');
+const {User} = require('../db/model')
 
 const auth = async(req,res,next)=>{
     try {
@@ -7,10 +7,11 @@ const auth = async(req,res,next)=>{
         console.log(token,"auth");
         const verifyuser=jwt.verify(token,process.env.SECRET_KEY);
         console.log(verifyuser,"auth");
-        const user=await User.findOne({_id:verifyuser._id});
+        const user=await User.findById({_id:verifyuser._id});
+        console.log(user);
         req.token=token;
         req.user=user;
-        // console.log(user);
+        console.log("success");
         next();
     } catch (error) {
         res.status(401).send(error);

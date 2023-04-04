@@ -2,20 +2,21 @@
     <form [formGroup]="loginform" (ngSubmit)="postlogindata(loginform.value)">
         <h4 class="h4 text-center mb-4">User Login</h4>
         <!-- Email input -->
-        <div class="form-outline mb-4 border-bottom">
+        <div class="form-outline border-bottom">
           <input formControlName="email" type="email" id="form2Example1" class="form-control" />
           <label class="form-label" for="form2Example1">Email address</label>
         </div>
-      
+        <span class="text-danger" *ngIf="email && email.invalid && email.touched">*This feild is required</span>
         <!-- Password input -->
-        <div class="form-outline mb-4 border-bottom">
+        <div class="form-outline mt-4 border-bottom">
           <input formControlName="password" type="password" id="form2Example2" class="form-control" />
           <label class="form-label" for="form2Example2">Password</label>
         </div>
+        <span class="text-danger" *ngIf="password && password.invalid && password.touched">*This feild is required</span>
       
       
         <!-- Submit button -->
-        <button type="submit" class="btn btn-block mb-4">Sign in</button>
+        <button type="submit" class="btn btn-block mt-4 mb-4">Sign in</button>
       
         <!-- Register buttons -->
         <div class="text-center">

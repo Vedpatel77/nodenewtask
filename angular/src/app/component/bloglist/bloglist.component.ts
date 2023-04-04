@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NodeService } from 'src/app/service/node.service';
 // import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ editblogdataid:any;
 ngOnInit(): void {
   this.getblogs();
 }
-constructor(public service:NodeService,private route:Router){}
+constructor(public service:NodeService,private route:Router,private snakebar : MatSnackBar){}
 
 updateBlogForm = new FormGroup({
   blogTitle : new FormControl(''),
@@ -29,9 +29,14 @@ updateBlogForm = new FormGroup({
 })
 
 getblogs(){
-  this.service.getblog().subscribe((res)=>{
-    // console.log(res);
-  this.blogdata=res;
+  this.service.getblog().subscribe((res:any)=>{
+    this.blogdata=res.blogs;
+    if (res.statusCode == 400) {
+      this.snakebar.open("somthing went wrong!",'retry',{
+        duration:3000,
+        verticalPosition:'top'
+      })
+    } 
   
   })
 }
@@ -57,14 +62,36 @@ editblog(blog:any){
 }
 updateBlog(id:any,blog:any){
   
-  this.service.updateblog(id,blog).subscribe(( res)=>{
+  this.service.updateblog(id,blog).subscribe(( res:any)=>{
+    if (res.statusCode == 200) {
+      this.snakebar.open("Blog Updated Sucessfully!",'',{
+        duration:3000,
+        verticalPosition:'top'
+      })
+    } else {
+      this.snakebar.open("somthing went wrong!",'retry',{
+        duration:3000,
+        verticalPosition:'top'
+      })
+    }
     this.getblogs();
   }); 
   let ref=document.getElementById('cancel');
     ref?.click();
 }
 deleteblog(blog:any){
-   this.service.deleteblog(blog).subscribe((res)=>{
+   this.service.deleteblog(blog).subscribe((res:any)=>{
+    if (res.statusCode == 200) {
+      this.snakebar.open("Blog delete Sucessfully!",'',{
+        duration:3000,
+        verticalPosition:'top'
+      })
+    } else {
+      this.snakebar.open("somthing went wrong!",'retry',{
+        duration:3000,
+        verticalPosition:'top'
+      })
+    }
     this.getblogs();
     
    })

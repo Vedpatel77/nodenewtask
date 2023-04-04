@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,10 +6,13 @@ import { Router } from '@angular/router';
   templateUrl: './viewblog.component.html',
   styleUrls: ['./viewblog.component.css']
 })
-export class ViewblogComponent {
+export class ViewblogComponent implements OnInit {
   blogdata:any;
     constructor(private router: Router) {
-    this.blogdata =this.router.getCurrentNavigation()?.extras.state // should log out 'bar'
+    this.blogdata =this.router.getCurrentNavigation()?.extras.state 
+  }
+
+  ngOnInit(): void {
     
   }
 }

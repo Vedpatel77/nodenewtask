@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NodeService } from 'src/app/service/node.service';
 // import { AgGridAngular } from 'ag-grid-angular';
@@ -14,7 +15,7 @@ export class UsersComponent implements OnInit {
   edituserdata:any;
   data:any;
   Odata:any;
-  constructor(public service:NodeService, private Router : Router){}
+  constructor(public service:NodeService, private Router : Router,private snakebar : MatSnackBar){}
 ngOnInit(): void {
   this.getusers();
 }
@@ -37,9 +38,14 @@ updateForm = new FormGroup({
    }
 
   getusers(){
-    this.service.getuser().subscribe((res)=>{
-      console.log(res);
+    this.service.getuser().subscribe((res:any)=>{
       this.users=res;
+      if (res.statusCode == 400) {
+        this.snakebar.open("somthing went wrong!",'retry',{
+          duration:3000,
+          verticalPosition:'top'
+        })
+      }
     });
   }
 
@@ -53,7 +59,18 @@ updateForm = new FormGroup({
   }
   
   updateUser(id:any,data:any){
-    this.service.updateuser(id,data).subscribe(( res)=>{
+    this.service.updateuser(id,data).subscribe(( res:any)=>{
+      if (res.statusCode == 200) {
+        this.snakebar.open("User delete Sucessfully!",'',{
+          duration:3000,
+          verticalPosition:'top'
+        })
+      } else {
+        this.snakebar.open("somthing went wrong!",'retry',{
+          duration:3000,
+          verticalPosition:'top'
+        })
+      }
     }); 
     let ref=document.getElementById('cancel');
       ref?.click();
@@ -62,7 +79,18 @@ updateForm = new FormGroup({
   }
 
   deleteUser(id:any){
-    this.service.deleteuser(id).subscribe(( res)=>{
+    this.service.deleteuser(id).subscribe(( res:any)=>{
+      if (res.statusCode == 200) {
+        this.snakebar.open("User delete Sucessfully!",'',{
+          duration:3000,
+          verticalPosition:'top'
+        })
+      } else {
+        this.snakebar.open("somthing went wrong!",'retry',{
+          duration:3000,
+          verticalPosition:'top'
+        })
+      }
       this.getusers();
     });
   }
