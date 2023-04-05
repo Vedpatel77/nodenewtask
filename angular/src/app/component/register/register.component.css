@@ -24,3 +24,10 @@ button:hover{
     color: white;
     font-family: Roboto;
 }
+.input,.form-select{
+    border: 1px solid teal;
+}
+/* .form-select:active{
+    border: 1px solid teal !important;
+    
+} */

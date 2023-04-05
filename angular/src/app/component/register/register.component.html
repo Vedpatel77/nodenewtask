@@ -1,20 +1,20 @@
 <div class="container w-50 form">
     <form [formGroup]="registerForm" (ngSubmit)="userRegister(registerForm.value)">
-        <h4 class="text-center mb-4">User Registration</h4>
+        <h2 class="text-center mb-4">User Registration</h2>
         <!-- 2 column grid layout with text inputs for the first and last names -->
         <div class="row mb-2">
-          <div class="col-xl-6 col-md-6 col-sm-12 mb-2">
+          <div class="col-xl-6 col-md-6 col-sm-12">
             <div class="form-outline">
-              <input formControlName="firstName" type="text" id="form3Example1" class="form-control border-bottom" />
               <label class="form-label" for="form3Example1">First name</label>
+              <input formControlName="firstName" type="text" id="form3Example1" class="form-control input" />
             </div>
         <span class="text-danger" *ngIf="firstName && firstName.invalid && firstName.touched">*This feild is required</span>
 
           </div>
           <div class="col-xl-6 col-md-6 col-sm-12">
             <div class="form-outline">
-              <input formControlName="lastName" type="text" id="form3Example2" class="form-control border-bottom" />
               <label class="form-label" for="form3Example2">Last name</label>
+              <input formControlName="lastName" type="text" id="form3Example2" class="form-control input" />
             </div>
         <span class="text-danger" *ngIf="lastName && lastName.invalid && lastName.touched">*This feild is required</span>
 
@@ -23,22 +23,34 @@
       
         <!-- Email input -->
         <div class="form-outline mt-2">
-          <input formControlName="email" type="email" id="form3Example3" class="form-control border-bottom" />
           <label class="form-label" for="form3Example3">Email address</label>
+          <input formControlName="email" type="email" id="form3Example3" class="form-control input" />
         </div>
         <span class="text-danger" *ngIf="email && email.invalid && email.touched">*This feild is required</span>
+        <!-- select role -->
+        <!-- <label class="form-label" for="form3Example3">Select Role</label> -->
+        <div class="mt-3">
+        <select class="form-select" formControlName="role" aria-label="Default select example">
+          <option value="null" disabled="true" [selected]="true">Select Role</option>
+          <option  value="admin">Admin</option>
+          <option value="user">User</option>
+          <option value="writter">Writter</option>
+        </select>
+      </div>
+      <span class="text-danger" *ngIf="role && role.invalid && role.touched">*This feild is required</span>
+
         <!-- phone number -->
         <div class="form-outline mt-2">
-          <input formControlName="number" type="text" id="form6Example6" class="form-control border-bottom" />
           <label class="form-label" for="form6Example6">Phone</label>
+          <input formControlName="number" type="text" id="form6Example6" class="form-control input" />
         </div>
         <span class="text-danger" *ngIf="number && number.invalid && number.touched">*This feild is required</span>
 
       
         <!-- Password input -->
-        <div class="form-outline mt-2">
-          <input formControlName="password" type="password" id="form3Example4" class="form-control border-bottom" />
+        <div class="form-outline mt-2 mb-3">
           <label class="form-label" for="form3Example4">Password</label>
+          <input formControlName="password" type="password" id="form3Example4" class="form-control input" />
         </div>
         <span class="text-danger" *ngIf="password && password.invalid && password.touched">*This feild is required</span>
         

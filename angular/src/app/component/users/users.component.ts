@@ -61,7 +61,7 @@ updateForm = new FormGroup({
   updateUser(id:any,data:any){
     this.service.updateuser(id,data).subscribe(( res:any)=>{
       if (res.statusCode == 200) {
-        this.snakebar.open("User delete Sucessfully!",'',{
+        this.snakebar.open("User Updated Sucessfully!",'',{
           duration:3000,
           verticalPosition:'top'
         })

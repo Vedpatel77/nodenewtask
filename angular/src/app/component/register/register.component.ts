@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
       firstName:new FormControl('',[Validators.required]),
       lastName:new FormControl('',[Validators.required]),
       email:new FormControl('',[Validators.required]),
+      role:new FormControl('',[Validators.required]),
       number:new FormControl('',[Validators.required]),
       password:new FormControl('',[Validators.required])
   })
@@ -34,6 +35,9 @@ export class RegisterComponent implements OnInit {
   }
   get email(){
     return this.registerForm.get('email')
+  }
+  get role(){
+    return this.registerForm.get('role')
   }
   get number(){
     return this.registerForm.get('number')

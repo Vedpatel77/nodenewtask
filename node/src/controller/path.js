@@ -52,6 +52,7 @@ exports.addUser = async(req,res)=>{
         const token = await addUser.createtoken();
 
         const saveUser = await addUser.save();
+        console.log(saveUser);
         res.cookie('jwt',token);
         res.send({
             saveUser,res:{
@@ -115,10 +116,10 @@ exports.login = async(req,res)=>{
         }
 
     } catch (error) {
-        res.status(400).send({
+        res.status(400).send({res:{
             statusCode: 400,
             message : "Bad Request"
-        });
+        }});
     }
 }
 

@@ -85,18 +85,19 @@
                                 {{data.email}}  
                             </td>
                         </tr>
-                        <!-- <tr>        
+                        <tr>        
                             <td>
                                 <strong>
                                     <span class="glyphicon glyphicon-calendar text-primary"></span>
-                                    created                                                
+                                    Register Date                                               
                                 </strong>
                             </td>
                             <td class="text-primary">
-                                20 jul 20014
+                               
+                                {{data.RegisterDate | date :'dd/MM/yyyy, h:mm a' }}
                             </td>
                         </tr>
-                        <tr>        
+                        <!-- <tr>        
                             <td>
                                 <strong>
                                     <span class="glyphicon glyphicon-calendar text-primary"></span>

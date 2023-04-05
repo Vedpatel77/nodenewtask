@@ -19,7 +19,7 @@ const routes: Routes = [
   {path:'users/:id',component:ViewuerComponent},
   {path:'blogslist',component:BloglistComponent,canActivate:[CanactivateGuard]},
   {path:'viewblog',component:ViewblogComponent},
-  {path:'blogs/addblog',component:BlogsComponent}
+  {path:'blogs/addblog',component:BlogsComponent,canActivate:[CanactivateGuard]}
 ];
 
 @NgModule({
