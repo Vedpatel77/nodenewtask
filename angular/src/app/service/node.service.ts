@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -141,7 +141,13 @@ export class NodeService {
   }
 
   addblog(blog: any) {
-    return this.http.post('http://localhost:3000/addblog', blog);
+    console.log(blog);
+    
+    return this.http.post('http://localhost:3000/addblog', blog ,{
+      headers: {
+        'Content-Type':' multipart/form-data;boundary=----WebKitFormBoundaryyrV7KO0BoCBuDbTL'
+},
+  })
   }
 
   updateuser(id: any, data: any) {

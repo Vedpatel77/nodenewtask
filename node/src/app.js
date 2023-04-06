@@ -10,6 +10,8 @@ const bcrypt = require('bcrypt');
 const cookieparser = require('cookie-parser');
 const cors = require('cors');
 const pathRouter = require('./router/path');
+var bodyParser = require('body-parser');
+app.use(bodyParser.text({ type: '/' }));
 
 app.use(cors({
     origin:"http://localhost:4200",
@@ -19,7 +21,10 @@ app.use(cookieparser());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(pathRouter);
+// app.use('/uploads',express.static('upload'));
+const upload = require('./middleware/upload');
+
+app.use(upload.any());
 
 // app.get("/logout",auth,async (req, res) => {
 //     try {

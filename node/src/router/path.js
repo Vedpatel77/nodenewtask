@@ -2,6 +2,8 @@ const express = require('express');
 const router = new express.Router();
 const auth = require('../middleware/auth');
 const controller = require('../controller/path');
+const upload = require('../middleware/upload');
+
 
 
 
@@ -9,7 +11,7 @@ const controller = require('../controller/path');
 router.get("/logout",auth,controller.logout);
 router.get('/users/:id',controller.user);
 router.post('/users',controller.addUser);
-router.post('/addblog',controller.addBlog);
+router.post('/addblog',upload.single('file'),controller.addBlog);
 router.post('/login',controller.login);
 router.get('/tabledata',controller.tabledata);
 router.get('/blogdata',controller.Blogs);

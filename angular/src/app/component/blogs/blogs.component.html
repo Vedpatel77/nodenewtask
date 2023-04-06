@@ -1,5 +1,5 @@
 <div class="container form">
-    <form [formGroup]="blogdata" (ngSubmit)="bolgdetail(blogdata.value)" class="mt-5">
+    <form  [formGroup]="blogdata" (ngSubmit)="bolgdetail(blogdata.value)" class="mt-5">
         <div class="form-outline mb-4">
             <input formControlName="blogerEmail" type="text" id="form6Example3" class="form-control border" />
             <label class="form-label" for="form6Example3">Enter Your email</label>
@@ -13,12 +13,17 @@
             <label class="form-label" for="form6Example3">Enter Blog Summary</label>
         </div>
         <div class="form-outline mb-4">
-            <textarea formControlName="blogDescription" class="form-control border" id="form6Example7" rows="4"></textarea>
+            <textarea formControlName="blogDescription" class="form-control border" id="form6Example7"
+                rows="4"></textarea>
             <label class="form-label" for="form6Example7">Enter Blog Description</label>
         </div>
         <div class="form-outline mb-4">
             <input formControlName="imageUrl" type="text" id="form6Example3" class="form-control border" />
             <label class="form-label" for="form6Example3">Enter Blog Image url</label>
+        </div>
+        <div class="mb-4">
+            <label class="form-label" for="customFile">Upload blog imgae</label>
+            <input  type="file" name="file" (change)="this.fileUpload($event)"  class="form-control" id="customFile" accept="image/*"/>
         </div>
         <button type="submit" class="btn btn-block mb-3">Add Blog</button>
     </form>

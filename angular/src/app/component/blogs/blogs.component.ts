@@ -10,6 +10,7 @@ import { NodeService } from 'src/app/service/node.service';
   styleUrls: ['./blogs.component.css']
 })
 export class BlogsComponent implements OnInit{
+  file: any;
 // blogd:any;
   constructor(public service:NodeService, private router:Router ,private snakebar:MatSnackBar){
    
@@ -24,10 +25,13 @@ export class BlogsComponent implements OnInit{
     blogTitle : new FormControl(''),
     blogsummary : new FormControl(''),
     blogDescription : new FormControl(''),
-    imageUrl : new FormControl('')
+    imageUrl : new FormControl(''),
+
   })
   bolgdetail(blog:any){
-      this.service.addblog(blog).subscribe((res:any)=>{
+    console.log(blog);
+    
+      this.service.addblog({...blog , file: this.file}).subscribe((res:any)=>{
         // this.blogd=res;
         if (res.statusCode == 200) {
           this.snakebar.open("Blog Added Sucessfully!",'',{
@@ -44,5 +48,10 @@ export class BlogsComponent implements OnInit{
       });
   }
  
+
+fileUpload(event: any){
+ this.file= event.target.files[0]
+ console.log(this.file);
+}
 
 }
