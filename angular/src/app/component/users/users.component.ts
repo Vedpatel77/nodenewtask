@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NodeService } from 'src/app/service/node.service';
@@ -10,11 +11,22 @@ import { NodeService } from 'src/app/service/node.service';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
+
 export class UsersComponent implements OnInit {
   users:any;
   edituserdata:any;
   data:any;
   Odata:any;
+  // POSTS:any;
+  page:number=1;
+  count:number = 0;
+  tableSize:number = 7;
+  tableSizes:any = [5,10,15,20];
+
+
+  // @ViewChild(MatPaginator) paginator !:MatPaginator;
+
+
   constructor(public service:NodeService, private Router : Router,private snakebar : MatSnackBar){}
 ngOnInit(): void {
   this.getusers();
@@ -37,19 +49,35 @@ updateForm = new FormGroup({
     }
    }
 
-  getusers(){
-    this.service.getuser().subscribe((res:any)=>{
-      this.users=res;
-      if (res.statusCode == 400) {
-        this.snakebar.open("somthing went wrong!",'retry',{
-          duration:3000,
-          verticalPosition:'top'
-        })
-      }
-    });
-  }
+   
+   getusers(){
+    // this.onTableDataChange(event);
+     this.service.getuser(this.page,this.tableSize).subscribe((res:any)=>{
+       this.users=res;
+      //  this.users.paginator=this.paginator;
+       if (res.statusCode == 400) {
+         this.snakebar.open("somthing went wrong!",'retry',{
+           duration:3000,
+           verticalPosition:'top'
+          })
+        }
+      });
+    }
 
-  edituser(user:any){
+
+    onTableDataChange(event:any){
+     this.page =event;
+     this.getusers();
+    }
+
+    onTableSizeChange(event:any){
+      this.tableSize = event.target.value;
+      this.page=1;
+      this.getusers();
+    }
+    
+    
+    edituser(user:any){
 
     this.edituserdata=user._id;
     this.updateForm.controls['firstName'].setValue(user.firstName);

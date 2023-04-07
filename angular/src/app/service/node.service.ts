@@ -128,8 +128,8 @@ export class NodeService {
     }
   }
 
-  getuser() {
-    return this.http.get('http://localhost:3000/tabledata');
+  getuser(page:number,limit:number) {
+    return this.http.get(`http://localhost:3000/tabledata?page=${page}&limit=${limit}`);
   }
 
   getblog() {
