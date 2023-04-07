@@ -16,6 +16,8 @@ import { ViewuerComponent } from './component/viewuer/viewuer.component';
 import { BloglistComponent } from './component/bloglist/bloglist.component';
 import { ViewblogComponent } from './component/viewblog/viewblog.component';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
     NoopAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatPaginatorModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

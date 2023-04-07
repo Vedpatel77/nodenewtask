@@ -1,5 +1,5 @@
 const express = require('express');
-// const app = express();
+const app = express();
 const bcrypt = require('bcrypt');
 const { User, Blog } = require('../db/model');
 const path = require('path');
@@ -35,14 +35,12 @@ exports.logout = async (req, res) => {
 //view user
 exports.user = async (req, res) => {
     try {
-
-        const userfind = await User.findById({ _id: req.params.id })
-        res.status(200).send({
-            ...userfind, res: {
-                statusCode: 200,
-                message: "success"
-            }
-        });
+     
+        const userfind = await User.findById({_id : req.params.id})
+        res.status(200).send({...userfind,res:{
+            statusCode:200,
+            message : "success"
+        }});
     } catch (error) {
         res.status(400).send({
             statusCode: 400,
@@ -160,7 +158,15 @@ exports.login = async (req, res) => {
 //tabledta(userdata)
 exports.tabledata = async (req, res) => {
     try {
-        const users = await User.find();
+        
+        let page = Number(req.query.page) || 1;
+        console.log(page);
+        let limit = Number(req.query.limit) || 3;
+
+        let skip = (page - 1)*limit;
+
+        const users = await User.find().skip(skip).limit(limit);
+        // users = users.skip(skip).limit(limit);
         res.send(users);
     } catch (error) {
         res.status(400).send({

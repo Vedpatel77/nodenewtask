@@ -11,7 +11,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let user of users;let i = index ">
+      <tr *ngFor="let user of users | paginate:{
+        itemsPerPage: tableSize,
+        currentPage: page,
+        totalItems: count
+      };let i = index">
         <td scope="row">{{i+1}}</td>
         <td>{{user.firstName+" "+user.lastName}}</td>
         <td>{{user.email}}</td>
@@ -26,6 +30,16 @@
       </tr>
     </tbody>
   </table>
+
+  <div class="d-flex justify-content-center pagination">
+    
+    <pagination-controls
+    previousLabel="prev"
+    nextLabel="Next"
+    (pageChange)="onTableDataChange($event)"
+    ></pagination-controls>
+  </div>
+
 </div>
 
 
@@ -35,7 +49,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-center" id="exampleModalLabel">Update details</h5>
+        <h3 class="modal-title text-center" id="exampleModalLabel">Update details</h3>
         <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
