@@ -3,7 +3,7 @@
     <h1 class="text-center mt-5 mb-5 text-decoration-underline">Today's famous Blogs</h1>
     <div *ngFor="let blog of blogdata" class="row mb-3 blog">
         <div class="col-lg-3 col-md-4 col-sm-12 mb-3 ">
-            <img class="image" src="{{blog.imageUrl}}" />
+            <img class="image" src="{{blog.imageFile}}" />
         </div>
         <div class="col-lg-7 col-md-8 col-sm-12">
             <h3 class="blogtitle" (click)="viewblog(blog)">
@@ -26,7 +26,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-center" id="exampleModalLabel">Update Blog</h5>
+                <h3 class="modal-title text-center mt-2" id="exampleModalLabel">Update Blog</h3>
                 <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -48,10 +48,9 @@
                             rows="4"></textarea>
                     </div>
                     <!-- phone number -->
-                    <div class="form-outline mb-2">
-                        <label class="form-label" for="form6Example6">Image Url</label>
-                        <input formControlName="imageUrl" type="text" id="form6Example6"
-                            class="form-control border-bottom" />
+                    <div class="mb-2">
+                        <label class="form-label" for="customFile">Choose your image</label>
+                         <input (change)="onFileSelected($event)" formControlName="imageFile" type="file" class="form-control" id="customFile" />
                     </div>
                 </form>
             </div>

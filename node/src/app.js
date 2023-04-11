@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const path = require('path');
 const port = process.env.PORT || 3000 ;
 require('./db/conn');
 const http = require('http').Server(app);
@@ -15,6 +16,7 @@ const cors = require('cors');
 const pathRouter = require('./router/path');
 const { Socket } = require('dgram');
 
+app.use('/addblog',express.static(path.join('upload')))
 app.use(cors({
     origin:"http://localhost:4200",
     credentials:true,

@@ -143,8 +143,20 @@ export class NodeService {
     return this.http.get(`http://localhost:3000/users/${id}`);
   }
 
-  addblog(blog: any) {
-    return this.http.post('http://localhost:3000/addblog', blog);
+  addblog(blog: any,image:any) {
+    let testData: FormData = new FormData();
+    // console.log(image);
+
+
+    testData.append('blogerEmail', blog.blogerEmail);
+    testData.append('blogTitle', blog.blogTitle);
+    testData.append('blogsummary', blog.blogsummary);
+    testData.append('blogDescription', blog.blogDescription);
+    testData.append('imageFile', image);
+    console.log(testData);
+    
+    
+    return this.http.post('http://localhost:3000/addblog', testData);
   }
 
   updateuser(id: any, data: any) {

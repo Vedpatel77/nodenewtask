@@ -15,6 +15,7 @@ blogdata:any;
 editblogdataid:any;
   Odata: any;
   data: any;
+  file:any;
 
 ngOnInit(): void {
   this.getblogs();
@@ -25,7 +26,7 @@ updateBlogForm = new FormGroup({
   blogTitle : new FormControl(''),
   blogsummary : new FormControl(''),
   blogDescription : new FormControl(''),
-  imageUrl : new FormControl(''),
+  imageFile : new FormControl(''),
 })
 
 getblogs(){
@@ -58,11 +59,20 @@ editblog(blog:any){
   this.updateBlogForm.controls['blogTitle'].setValue(blog.blogTitle);
   this.updateBlogForm.controls['blogsummary'].setValue(blog.blogsummary);
   this.updateBlogForm.controls['blogDescription'].setValue(blog.blogDescription);
-  this.updateBlogForm.controls['imageUrl'].setValue(blog.imageUrl);
+  // this.updateBlogForm.controls['imageFile'].setValue(blog.imageFile);
+  
 }
 updateBlog(id:any,blog:any){
-  
-  this.service.updateblog(id,blog).subscribe(( res:any)=>{
+  let testData: FormData = new FormData();
+
+    testData.append('blogerEmail', blog.blogerEmail);
+    testData.append('blogTitle', blog.blogTitle);
+    testData.append('blogsummary', blog.blogsummary);
+    testData.append('blogDescription', blog.blogDescription);
+    console.log(testData);
+    
+    // testData.append('imageFile', this.file);
+  this.service.updateblog(id,testData).subscribe(( res:any)=>{
     if (res.statusCode == 200) {
       this.snakebar.open("Blog Updated Sucessfully!",'',{
         duration:3000,
@@ -96,6 +106,12 @@ deleteblog(blog:any){
     
    })
 }
+
+onFileSelected(event:any){
+  this.file = event.target.files[0];
+ 
+}
+
 viewblog(blog:any){
   this.route.navigate(['/viewblog'],{ state: { vblog : blog } })
 }

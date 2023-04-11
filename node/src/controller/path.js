@@ -3,6 +3,8 @@ const app = express();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const {User,Blog} = require('../db/model');
+const fs = require('fs');
+const path = require('path');
 
 
 //logout 
@@ -73,9 +75,18 @@ exports.addUser = async(req,res)=>{
 exports.addBlog = async(req,res)=>{
     try {
         console.log(req.body);
-        const addBlog = new Blog(req.body);
+        const imagePath =  `http://localhost:3000/addblog/${req.file.filename}`
+        const addBlog = new Blog({
+            ...req.body,
+            imageFile: imagePath
+          });
+          console.log(addBlog);
+        // const addBlog = new Blog(req.body);
+        // console.log(imagePath)
         const saveBlog = await addBlog.save();
+        
         res.send({
+            data : saveBlog,
             statusCode: 200,
             message : "success"
         });
@@ -202,7 +213,16 @@ exports.updateUser = async(req,res)=>{
 exports.updateBlog = async(req,res)=>{
     try {
          console.log(req.params.id);
-        const updateblog = await Blog.findByIdAndUpdate(req.params.id,req.body);
+         const imagePath =  `http://localhost:3000/addblog/${req.file.filename}`
+        // const addBlog = new Blog({
+        //     ...req.body,
+        //     imageFile: imagePath
+        //   });
+        const updateblog = await Blog.findByIdAndUpdate(req.params.id,{
+            ...req.body,
+            imageFile: imagePath
+          });
+          console.log(updateblog);
         res.status(200).send({
             message:"success",
             statusCode:200
@@ -235,7 +255,13 @@ exports.deleteUser = async(req,res)=>{
 exports.deleteBlog = async(req,res)=>{
     try {
         // console.log(req.params.id);
+        const user = await Blog.findById({_id:req.params.id})
+        const path = user.imageFile;
+        console.log(path);
+        const image = (path.substr(path.lastIndexOf("/") + 1));
+        console.log(image);
         const deleteblog = await Blog.findByIdAndDelete(req.params.id);
+        console.log(deleteblog);
         res.status(200).send({
             statusCode:200,
             message:"success"

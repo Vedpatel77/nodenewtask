@@ -56,9 +56,8 @@ const BlogSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    imageUrl:{
+    imageFile:{
         type:String,
-        required:true
     }
 });
 
