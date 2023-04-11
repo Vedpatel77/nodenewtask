@@ -93,7 +93,6 @@ exports.login = async(req,res)=>{
     try {
 
         const {email,password}=req.body;
-        console.log(email+" + "+password);
         const user = await User.findOne({ email: email });
         const token = await user.createtoken();
   
@@ -128,8 +127,11 @@ exports.tabledata = async(req,res)=>{
     try {
         
         let page = Number(req.query.page) || 1;
-        console.log(page);
+        // let offset = Number(req.query.offset) || 1;
+        
+        // console.log(page);
         let limit = Number(req.query.limit) || 3;
+        // console.log(limit);
 
         let skip = (page - 1)*limit;
 
@@ -148,6 +150,23 @@ exports.tabledata = async(req,res)=>{
 exports.Blogs = async(req,res)=>{
     try {
         const blogs = await Blog.find();
+        res.status(200).send({blogs,
+            res:{
+                statusCode:200,
+                message:"success"
+            }
+        });
+    } catch (error) {
+        res.status(400).send({
+            statusCode:400,
+            message : "Bad request"
+        });
+    }
+}
+//myblog
+exports.myBlogs = async(req,res)=>{
+    try {
+        const blogs = await Blog.find({blogerEmail:req.params.email});
         res.status(200).send({blogs,
             res:{
                 statusCode:200,

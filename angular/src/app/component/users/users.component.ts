@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
   Odata:any;
   // POSTS:any;
   page:number=1;
-  count:number = 0;
+  count:number = 10;
   tableSize:number = 7;
   tableSizes:any = [5,10,15,20];
 

@@ -49,6 +49,9 @@
             <a class="dropdown-item" (click)="viewUser()">My profile</a>
           </li>
           <li *ngIf="service.iswritter() || service.isadmin() ">
+            <a class="dropdown-item" routerLink="/myBlog">My Blog</a>
+          </li>
+          <li *ngIf="service.iswritter() || service.isadmin() ">
             <a class="dropdown-item" routerLink="/blogs/addblog">Add Blog</a>
           </li>
           <li>

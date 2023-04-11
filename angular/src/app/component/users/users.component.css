@@ -3,7 +3,7 @@
     background-color: teal;
 }
 .pagination{
-    position: fixed;
+    position: absolute;
     height: 30px;
     bottom: 0px;
     left: 0px;

@@ -11,6 +11,7 @@ import { NodeService } from 'src/app/service/node.service';
 })
 export class BlogsComponent implements OnInit{
 // blogd:any;
+imageFile:any;
   constructor(public service:NodeService, private router:Router ,private snakebar:MatSnackBar){
    
   }
@@ -24,9 +25,13 @@ export class BlogsComponent implements OnInit{
     blogTitle : new FormControl(''),
     blogsummary : new FormControl(''),
     blogDescription : new FormControl(''),
-    imageUrl : new FormControl('')
+    imageFile : new FormControl()
   })
+
+
   bolgdetail(blog:any){
+    console.log(blog);
+    
       this.service.addblog(blog).subscribe((res:any)=>{
         // this.blogd=res;
         if (res.statusCode == 200) {
@@ -44,5 +49,11 @@ export class BlogsComponent implements OnInit{
       });
   }
  
+  onFileSelected(event:any){
+         if(event.target.files.length>0){
+          this.imageFile = event.target.files[0];
+          // this.blogdata.get('imageFile')?.setValue(imageFile);
+         }
+  }
 
 }

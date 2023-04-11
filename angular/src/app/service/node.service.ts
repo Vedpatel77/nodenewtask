@@ -131,6 +131,9 @@ export class NodeService {
   getuser(page:number,limit:number) {
     return this.http.get(`http://localhost:3000/tabledata?page=${page}&limit=${limit}`);
   }
+  getuserblog(userEmail:any){
+    return this.http.get('http://localhost:3000/myblog/'+userEmail);
+  }
 
   getblog() {
     return this.http.get('http://localhost:3000/blogdata');

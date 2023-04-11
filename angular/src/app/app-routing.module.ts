@@ -9,6 +9,7 @@ import { ViewuerComponent } from './component/viewuer/viewuer.component';
 import { BloglistComponent } from './component/bloglist/bloglist.component';
 import { ViewblogComponent } from './component/viewblog/viewblog.component';
 import { CanactivateGuard } from './guard/canactivate.guard';
+import { MyblogComponent } from './component/myblog/myblog.component';
 
 const routes: Routes = [
   {path:'',redirectTo:'home',pathMatch:'full'},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path:'users/:id',component:ViewuerComponent},
   {path:'blogslist',component:BloglistComponent,canActivate:[CanactivateGuard]},
   {path:'viewblog',component:ViewblogComponent},
+  {path:'myBlog',component:MyblogComponent},
   {path:'blogs/addblog',component:BlogsComponent,canActivate:[CanactivateGuard]}
 ];
 

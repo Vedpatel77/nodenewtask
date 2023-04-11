@@ -1,22 +1,20 @@
-
 <div class="container">
-    <h1 class="text-center mt-5 mb-5 text-decoration-underline">Today's famous Blogs</h1>
-    <div *ngFor="let blog of blogdata" class="row mb-3 blog">
+    <h1 class="text-center mt-5 mb-5 text-decoration-underline">My Blogs</h1>
+    <div *ngFor="let blog of userblog"  class="row mb-3 blog">
         <div class="col-lg-3 col-md-4 col-sm-12 mb-3 ">
             <img class="image" src="{{blog.imageUrl}}" />
         </div>
         <div class="col-lg-7 col-md-8 col-sm-12">
             <h3 class="blogtitle" (click)="viewblog(blog)">
-                {{blog.blogTitle}}</h3>
+                {{blog.blogTitle}}  </h3>
             <h4 class="text-secondary">{{blog.blogsummary}}</h4>
         </div>
 
-        <div *ngIf="isadmin()" class="col-lg-2 col-md-12 col-sm-12">
-            <button type="button" class="btn btn-primary mx-2" data-mdb-toggle="modal" data-mdb-target="#exampleModal"
-                (click)="editblog(blog)">
+        <div class="col-lg-2 col-md-12 col-sm-12">
+            <button type="button" class="btn btn-primary mx-2" (click)="editblog(blog)" data-mdb-toggle="modal" data-mdb-target="#exampleModal">
                 <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button class="btn btn-danger" (click)="deleteblog(blog)"><i class="fa-solid fa-trash-can"></i></button>
+            <button class="btn btn-danger" (click)="deleteblog(blog)" ><i class="fa-solid fa-trash-can"></i></button>
         </div>
     </div>
 </div>

@@ -18,6 +18,7 @@ import { ViewblogComponent } from './component/viewblog/viewblog.component';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { NgxPaginationModule } from 'ngx-pagination';
+import { MyblogComponent } from './component/myblog/myblog.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     RegisterComponent,
     ViewuerComponent,
     BloglistComponent,
-    ViewblogComponent
+    ViewblogComponent,
+    MyblogComponent
   ],
   imports: [
     BrowserModule,
