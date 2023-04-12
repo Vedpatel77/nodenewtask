@@ -65,10 +65,13 @@ editblog(blog:any){
 updateBlog(id:any,blog:any){
   let testData: FormData = new FormData();
 
-    testData.append('blogerEmail', blog.blogerEmail);
     testData.append('blogTitle', blog.blogTitle);
     testData.append('blogsummary', blog.blogsummary);
     testData.append('blogDescription', blog.blogDescription);
+    if (this.file) {
+      
+      testData.append('imageFile',this.file);
+    }
     console.log(testData);
     
     // testData.append('imageFile', this.file);

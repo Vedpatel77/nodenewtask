@@ -23,6 +23,7 @@
     "ag-grid-angular": "^29.2.0",
     "ag-grid-community": "^29.2.0",
     "mdb-angular-ui-kit": "^4.0.0",
+    "ngx-cookie-service": "^15.0.0",
     "ngx-pagination": "^6.0.3",
     "pagination": "^0.4.6",
     "rxjs": "~7.8.0",

@@ -11,14 +11,17 @@ import { UsersComponent } from './component/users/users.component';
 import { HomeComponent } from './component/home/home.component';
 import { RegisterComponent } from './component/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ViewuerComponent } from './component/viewuer/viewuer.component';
 import { BloglistComponent } from './component/bloglist/bloglist.component';
 import { ViewblogComponent } from './component/viewblog/viewblog.component';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { NgxPaginationModule } from 'ngx-pagination';
+import {CookieService} from 'ngx-cookie-service'
 import { MyblogComponent } from './component/myblog/myblog.component';
+import { NodeService } from './service/node.service';
+import { AuthInterceptorService } from './service/auth-interceptor.service';
 
 
 @NgModule({
@@ -45,7 +48,16 @@ import { MyblogComponent } from './component/myblog/myblog.component';
     MatPaginatorModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [
+    CookieService,
+    NodeService,
+    AuthInterceptorService,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:AuthInterceptorService,
+      multi:true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
