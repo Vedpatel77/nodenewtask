@@ -41,8 +41,7 @@ const userSchema = new mongoose.Schema({
 });
 const BlogSchema = new mongoose.Schema({
     blogerEmail:{
-        type:String,
-        required:true
+        type:String
     },
     blogTitle:{
         type:String,
@@ -57,7 +56,7 @@ const BlogSchema = new mongoose.Schema({
         required:true
     },
     imageFile:{
-        type:String,
+        type:String
     }
 });
 
