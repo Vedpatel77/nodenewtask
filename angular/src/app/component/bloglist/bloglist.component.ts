@@ -31,6 +31,8 @@ updateBlogForm = new FormGroup({
 
 getblogs(){
   this.service.getblog().subscribe((res:any)=>{
+    console.log(res);
+    
     this.blogdata=res.blogs;
     if (res.statusCode == 400) {
       this.snakebar.open("somthing went wrong!",'retry',{

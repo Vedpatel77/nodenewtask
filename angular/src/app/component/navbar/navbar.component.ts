@@ -17,13 +17,12 @@ export class NavbarComponent implements OnInit{
 
   ngOnInit(): void {
     
+    this.Data = sessionStorage.getItem('user');
+    this.id = JSON.parse(this.Data);
   }
 
   viewUser(){
-    this.Data = sessionStorage.getItem('user');
-    this.id = JSON.parse(this.Data);
-    console.log(this.id);
-    
+    console.log(this.id); 
     this.Router.navigate(['/users/' + this.id._id]);  
   }
   logout(){

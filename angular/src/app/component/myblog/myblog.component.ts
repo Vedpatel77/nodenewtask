@@ -12,10 +12,14 @@ import { NodeService } from 'src/app/service/node.service';
 export class MyblogComponent implements OnInit {
 useremail:any;
 userblog:any;
+user:any;
 editblogdataid: any;
 
 constructor(public service:NodeService,private snakebar:MatSnackBar,private route:Router){
-  this.useremail=service.loginuser[0].email;
+  this.user = sessionStorage.getItem('user');
+  this.useremail=JSON.parse(this.user).email;
+  console.log(this.useremail);
+  
 }
 
 updateBlogForm = new FormGroup({

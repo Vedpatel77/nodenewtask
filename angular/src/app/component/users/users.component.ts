@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
   Odata:any;
   // POSTS:any;
   page:number=1;
-  count:number = 10;
+  count:number = 0;
   tableSize:number = 7;
   tableSizes:any = [5,10,15,20];
 
@@ -54,6 +54,9 @@ updateForm = new FormGroup({
     // this.onTableDataChange(event);
      this.service.getuser(this.page,this.tableSize).subscribe((res:any)=>{
        this.users=res;
+       this.count=res.length;
+       console.log(this.count);
+       
       //  this.users.paginator=this.paginator;
        if (res.statusCode == 400) {
          this.snakebar.open("somthing went wrong!",'retry',{

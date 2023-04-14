@@ -92,7 +92,8 @@ export class NodeService {
     }
     else {
       this.http.post('http://localhost:3000/login', Data, { withCredentials: true, observe: 'response', responseType: "json" }).subscribe((res: any) => {
-        if (res.body.res.statusCode == 200) {
+       
+      if (res.body.res.statusCode == 200) {
               this.loginuser = [res.body.user]
               console.log(this.loginuser);
       
@@ -102,6 +103,10 @@ export class NodeService {
                   verticalPosition:'top'
                 })
                 sessionStorage.setItem("user", JSON.stringify(this.loginuser[0]));
+                // console.log(res.body.jwt);
+                
+                localStorage.setItem("access_token",JSON.stringify(res.body.jwt.access_token));
+                localStorage.setItem("referesh_token",JSON.stringify(res.body.jwt.refresh_token));
                 this.route.navigate(['/home']);
               } 
             }
@@ -136,7 +141,7 @@ export class NodeService {
   }
 
   getblog() {
-    return this.http.get('http://localhost:3000/blogdata');
+    return this.http.get('http://localhost:3000/blogdata')
   }
 
   viewuser(id: any) {
@@ -203,6 +208,7 @@ export class NodeService {
       }
     });
     sessionStorage.clear();
+    localStorage.clear();
     this.route.navigate(['/login']);
   }
 
@@ -214,6 +220,22 @@ export class NodeService {
     }
   }
 
+
+  refreshToken(access_token:any, refresh_token:any){
+    const token={
+      access_token,
+      refresh_token
+    }
+    this.http.post("http://localhost:3000/refreshToken",token).subscribe({
+      next:(res:any)=>{
+        localStorage.setItem('access_token',res.newToken);
+        localStorage.setItem('refresh_token',res.newrefresh_token);
+      },
+      error:(error)=>{
+        console.log(error)
+      }
+    })
+  }
 
 
 

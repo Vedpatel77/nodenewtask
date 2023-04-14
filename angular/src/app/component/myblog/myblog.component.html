@@ -2,7 +2,7 @@
     <h1 class="text-center mt-5 mb-5 text-decoration-underline">My Blogs</h1>
     <div *ngFor="let blog of userblog"  class="row mb-3 blog">
         <div class="col-lg-3 col-md-4 col-sm-12 mb-3 ">
-            <img class="image" src="{{blog.imageUrl}}" />
+            <img class="image" src="{{blog.imageFile}}" />
         </div>
         <div class="col-lg-7 col-md-8 col-sm-12">
             <h3 class="blogtitle" (click)="viewblog(blog)">

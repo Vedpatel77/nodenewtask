@@ -6,9 +6,10 @@ const { unlink } = require('node:fs');
 //logout 
 exports.logout = async (req, res) => {
     try {
-        // console.log(req.user);
+        // console.log(req.user.tokens,"logout tokens");
 
         req.user.tokens = req.user.tokens.filter((currentele) => {
+            // console.log(currentele,"logout");
             return currentele.token !== req.token;
         })
         res.clearCookie("jwt");
@@ -49,7 +50,8 @@ exports.user = async (req, res) => {
 exports.addUser = async (req, res) => {
     try {
         const addUser = new User(req.body);
-        const token = await addUser.createtoken();
+        const {token,refresh_token} = await addUser.createtoken();
+        console.log(refresh_token);
 
         const saveUser = await addUser.save();
         console.log(saveUser);
@@ -57,7 +59,11 @@ exports.addUser = async (req, res) => {
         res.send({
             saveUser, res: {
                 statusCode: 200,
-                message: "success"
+                message: "success",
+                jwt:{
+                    access_token:token,
+                    refresh_token:refresh_token
+                }
             }
         });
 
@@ -103,28 +109,38 @@ exports.login = async (req, res) => {
 
         const { email, password } = req.body;
         const user = await User.findOne({ email: email });
-        const token = await user.createtoken();
-
+        console.log(user);
+        if (!user) {
+            return res.status(401).json({
+                error:true,
+                message:"invalid email"
+            })
+        }
         const ismatch = await bcrypt.compare(password, user.password);
+        if (!ismatch) {
+            return res.status(401).json({
+                error:true,
+                message:"invalid password"
+            })
+        }
+        const {token,refresh_token} = await user.createtoken();
+
+        console.log(refresh_token,"this is refersh");
         res.cookie("jwt", token);
 
 
-        if (ismatch) {
-            res.status(200).send({
-                user,
-                res: {
-                    statusCode: 200,
-                    message: "success"
-                }
-            });
-        } else {
-            res.status(401).send({
-                res: {
-                    statusCode: 401,
-                    message: "user not found"
-                }
-            });
-        }
+
+        res.status(200).send({
+                    user,
+                    res: {
+                        statusCode: 200,
+                        message: "success"
+                    },
+                    jwt:{
+                        access_token:token,
+                        refresh_token:refresh_token
+                    }
+                });
 
     } catch (error) {
         res.status(400).send({
@@ -141,6 +157,7 @@ exports.tabledata = async (req, res) => {
     try {
 
         let page = Number(req.query.page) || 1;
+        console.log(page);
         // let offset = Number(req.query.offset) || 1;
 
         // console.log(page);
@@ -150,8 +167,13 @@ exports.tabledata = async (req, res) => {
         let skip = (page - 1) * limit;
 
         const users = await User.find().skip(skip).limit(limit);
+        const length = await User.find().count()
         // users = users.skip(skip).limit(limit);
-        res.send(users);
+        res.status(200).send(users,{
+            status:200,
+            message:"sucess",
+            length:length
+        });
     } catch (error) {
         res.status(400).send({
             statusCode: 400,
@@ -245,35 +267,7 @@ exports.updateBlog = async (req, res) => {
             statusCode: 200
         })
 
-        //     if (req.file !== 'undefined') {
-        //         const user = await Blog.findById({_id:req.params.id});
-        //         const path = user.imageFile;
-        //         const imageName = (path.substr(path.lastIndexOf("/") + 1));
-        //     unlink(`upload/${imageName}`, (err) => {
-        //         if (err) throw err;
-        //         console.log(imageName+' was deleted');   
-        //       }); 
-        //       const imagePath =  `http://localhost:3000/addblog/${req.file.filename}`
-        //         console.log(imagePath);
-        //       } 
-        //       else {
-
-        //         console.log("nothing to do");
-        //       }
-        //   if (req.file !== 'undefined') {
-        //     const updateblog = await Blog.findByIdAndUpdate(req.params.id,{
-        //         ...req.body,
-        //         imageFile: imagePath
-        //       });
-        //   } else {
-        //     console.log(req.body);
-        //     const updateblog = await Blog.findByIdAndUpdate(req.params.id,req.body);
-        //   }
-
-        //     res.status(200).send({
-        //         message:"success",
-        //         statusCode:200
-        //     })
+     
     } catch (error) {
         res.status(400).send({
             statusCode: 400,
@@ -322,4 +316,27 @@ exports.deleteBlog = async (req, res) => {
             message: "Bad Request"
         });
     }
+}
+
+//refersh token
+exports.refreshToken = async(req,res) => {
+    try {
+        const refreshToken = req.body.refresh_token
+        console.log("refershtoken",refreshToken);
+        const refersh_token_verfiy = jwt.verify(refreshToken, process.env.REFERSH_TOKEN_SECRET_KEY);
+        console.log(refersh_token_verfiy);
+        const user = await User.findById(refersh_token_verfiy.id)
+        console.log(user)
+        user.refreshTokens = []
+        user.tokens = []
+        const {newToken,newrefresh_token} = await user.createtoken();
+        // const newToken = await user.getAuthToken()
+        // const newRefreshToken = await user.getRefreshToken()
+        res.send({user, newToken, newrefresh_token})
+      } catch (error) {
+        res.status(400).json({
+            statusCode: 400,
+            message: "Bad Request"
+        });
+      }
 }

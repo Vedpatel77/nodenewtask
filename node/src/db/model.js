@@ -34,8 +34,11 @@ const userSchema = new mongoose.Schema({
     },
     tokens:[{
         token:{
-        type:String,
-        required:true
+            type:String,
+            required:true
+        },
+        refresh_token:{
+            type:String
         }
        }]
 });
@@ -56,17 +59,24 @@ const BlogSchema = new mongoose.Schema({
         required:true
     },
     imageFile:{
-        type:String
+        type:String,
+        required:true
     }
 });
 
 userSchema.methods.createtoken = async function() {
     try {
-        const token = jwt.sign({_id:this._id.toString()},process.env.SECRET_KEY);
+        const token = jwt.sign({_id:this._id.toString()},process.env.SECRET_KEY,{
+            expiresIn:"5s"
+        });
+        const refresh_token = jwt.sign({_id:this._id.toString()},process.env.REFERSH_TOKEN_SECRET_KEY,{
+            expiresIn:"30d"
+        });
+        // console.log(refresh_token);
         // console.log(token,"modal");
-        this.tokens=this.tokens.concat({token:token})
+        this.tokens=this.tokens.concat({token:token,refresh_token:refresh_token})
         await this.save()
-        return token;
+        return {token,refresh_token};
     } catch (error) {
         console.log("the error part"+error);
     }
