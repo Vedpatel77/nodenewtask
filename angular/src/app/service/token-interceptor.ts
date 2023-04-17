@@ -23,14 +23,12 @@ export class TokenInterceptor implements HttpInterceptor {
                     } else {
                         switch (error.status) {
                             case 419:
-                                console.log('error 419');
-                                let access_token = localStorage.getItem('access_token');
-                                let refresh_token = localStorage.getItem('refresh_token');
-                                localStorage.removeItem('access_token');
-                                localStorage.removeItem('refresh_token');
-                                if (access_token && refresh_token) {
-                                    this.service.refreshToken(access_token, refresh_token)
-                                }
+                                this.service.accessToken().subscribe((res: any) => {
+                                    console.log(res.token);
+                                    localStorage.setItem('access_token' , res.token)
+                                });
+
+
                         }
                     }
                 } else {
@@ -38,7 +36,7 @@ export class TokenInterceptor implements HttpInterceptor {
                 }
                 return throwError(() => {
                     console.log("Errrrrr");
-                    
+
                     new Error(error.statusText);
                 });
             })

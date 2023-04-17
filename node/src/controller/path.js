@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const { User, Blog } = require('../db/model');
 const { unlink } = require('node:fs');
+const jwt = require('jsonwebtoken');
 
 
 //logout 
@@ -109,7 +110,6 @@ exports.login = async (req, res) => {
 
         const { email, password } = req.body;
         const user = await User.findOne({ email: email });
-        console.log(user);
         if (!user) {
             return res.status(401).json({
                 error:true,
@@ -125,7 +125,7 @@ exports.login = async (req, res) => {
         }
         const {token,refresh_token} = await user.createtoken();
 
-        console.log(refresh_token,"this is refersh");
+        // console.log(refresh_token,"this is refersh");
         res.cookie("jwt", token);
 
 
@@ -162,17 +162,19 @@ exports.tabledata = async (req, res) => {
 
         // console.log(page);
         let limit = Number(req.query.limit) || 3;
-        // console.log(limit);
+        console.log(limit);
 
         let skip = (page - 1) * limit;
-
+         console.log(skip);
         const users = await User.find().skip(skip).limit(limit);
         const length = await User.find().count()
+        console.log(length);
         // users = users.skip(skip).limit(limit);
-        res.status(200).send(users,{
+        res.status(200).send({
             status:200,
             message:"sucess",
-            length:length
+            length:length,
+            user:users
         });
     } catch (error) {
         res.status(400).send({
@@ -321,21 +323,23 @@ exports.deleteBlog = async (req, res) => {
 //refersh token
 exports.refreshToken = async(req,res) => {
     try {
-        const refreshToken = req.body.refresh_token
-        console.log("refershtoken",refreshToken);
-        const refersh_token_verfiy = jwt.verify(refreshToken, process.env.REFERSH_TOKEN_SECRET_KEY);
-        console.log(refersh_token_verfiy);
-        const user = await User.findById(refersh_token_verfiy.id)
+        
+        const refreshToken = req.body.Token
+        console.log(req.body);
+        const refersh_token_verfiy = jwt.verify(refreshToken,process.env.REFERSH_TOKEN_SECRET_KEY);
+        console.log(refersh_token_verfiy._id);
+        const user = await User.findById(refersh_token_verfiy._id)
         console.log(user)
-        user.refreshTokens = []
-        user.tokens = []
-        const {newToken,newrefresh_token} = await user.createtoken();
-        // const newToken = await user.getAuthToken()
-        // const newRefreshToken = await user.getRefreshToken()
-        res.send({user, newToken, newrefresh_token})
+
+        const token = jwt.sign({_id:user._id.toString()},process.env.SECRET_KEY,{
+            expiresIn:"30s"
+        });
+        
+        res.status(200).send({token})
       } catch (error) {
-        res.status(400).json({
-            statusCode: 400,
+        console.log(error);
+        res.status(500).json({
+            statusCode:500,
             message: "Bad Request"
         });
       }

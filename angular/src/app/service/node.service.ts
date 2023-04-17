@@ -14,8 +14,8 @@ export class NodeService {
   //registeruser detail
   regiteruser: any;
 
-  user:any;
-  ouser:any;
+  user: any;
+  ouser: any;
 
   constructor(public http: HttpClient, private route: Router, private snakebar: MatSnackBar) { }
 
@@ -44,8 +44,8 @@ export class NodeService {
             this.route.navigate(['/login']);
 
           }
-          
-        },(err)=>{
+
+        }, (err) => {
           if (err.status == 400) {
             this.snakebar.open("Plese check all the feild!", 'retry', {
               duration: 3000,
@@ -63,24 +63,24 @@ export class NodeService {
     }
   }
 
-  iswritter(){
+  iswritter() {
     this.user = sessionStorage.getItem('user');
     this.ouser = JSON.parse(this.user);
-    if(this.ouser.role == "writter"){
+    if (this.ouser.role == "writter") {
       return true;
-    }else{
+    } else {
       return false;
     }
-   }
-   isadmin(){
+  }
+  isadmin() {
     this.user = sessionStorage.getItem('user');
     this.ouser = JSON.parse(this.user);
-    if(this.ouser.role == "admin"){
+    if (this.ouser.role == "admin") {
       return true;
-    }else{
+    } else {
       return false;
     }
-   }
+  }
 
   login(Data: any) {
 
@@ -92,24 +92,22 @@ export class NodeService {
     }
     else {
       this.http.post('http://localhost:3000/login', Data, { withCredentials: true, observe: 'response', responseType: "json" }).subscribe((res: any) => {
-       
-      if (res.body.res.statusCode == 200) {
-              this.loginuser = [res.body.user]
-              console.log(this.loginuser);
-      
-              if (this.loginuser.length == 1) {
-                this.snakebar.open("login successfully!",'',{
-                duration:3000,
-                  verticalPosition:'top'
-                })
-                sessionStorage.setItem("user", JSON.stringify(this.loginuser[0]));
-                // console.log(res.body.jwt);
-                
-                localStorage.setItem("access_token",JSON.stringify(res.body.jwt.access_token));
-                localStorage.setItem("referesh_token",JSON.stringify(res.body.jwt.refresh_token));
-                this.route.navigate(['/home']);
-              } 
-            }
+
+        if (res.body.res.statusCode == 200) {
+          this.loginuser = [res.body.user]
+          console.log(this.loginuser);
+
+            this.snakebar.open("login successfully!", '', {
+              duration: 3000,
+              verticalPosition: 'top'
+            })
+            sessionStorage.setItem("user", JSON.stringify(this.loginuser[0]));
+
+            localStorage.setItem("access_token", res.body.jwt.access_token);
+            localStorage.setItem("referesh_token", res.body.jwt.refresh_token);
+            this.route.navigate(['/home']);
+          
+        }
       }, (error) => {
         if (error.status == 401) {
           this.snakebar.open("Invalid login!", '', {
@@ -117,7 +115,7 @@ export class NodeService {
             verticalPosition: 'top'
           })
         }
-        else if(error.status == 400){
+        else if (error.status == 400) {
           this.snakebar.open("something went wrong", 'retry', {
             duration: 3000,
             verticalPosition: 'top'
@@ -133,11 +131,12 @@ export class NodeService {
     }
   }
 
-  getuser(page:number,limit:number) {
+  getuser(page: number, limit: number) {    
     return this.http.get(`http://localhost:3000/tabledata?page=${page}&limit=${limit}`);
   }
-  getuserblog(userEmail:any){
-    return this.http.get('http://localhost:3000/myblog/'+userEmail);
+  
+  getuserblog(userEmail: any) {
+    return this.http.get('http://localhost:3000/myblog/' + userEmail);
   }
 
   getblog() {
@@ -148,7 +147,7 @@ export class NodeService {
     return this.http.get(`http://localhost:3000/users/${id}`);
   }
 
-  addblog(blog: any,image:any) {
+  addblog(blog: any, image: any) {
     let testData: FormData = new FormData();
     // console.log(image);
 
@@ -159,8 +158,8 @@ export class NodeService {
     testData.append('blogDescription', blog.blogDescription);
     testData.append('imageFile', image);
     console.log(testData);
-    
-    
+
+
     return this.http.post('http://localhost:3000/addblog', testData);
   }
 
@@ -221,20 +220,13 @@ export class NodeService {
   }
 
 
-  refreshToken(access_token:any, refresh_token:any){
-    const token={
-      access_token,
-      refresh_token
-    }
-    this.http.post("http://localhost:3000/refreshToken",token).subscribe({
-      next:(res:any)=>{
-        localStorage.setItem('access_token',res.newToken);
-        localStorage.setItem('refresh_token',res.newrefresh_token);
-      },
-      error:(error)=>{
-        console.log(error)
-      }
-    })
+  accessToken() {
+
+    const token = localStorage.getItem('referesh_token')
+    //  console.log(token,"all");
+
+
+    return this.http.post("http://localhost:3000/refreshToken", { Token: token })
   }
 
 

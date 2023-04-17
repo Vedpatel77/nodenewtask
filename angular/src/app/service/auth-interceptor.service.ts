@@ -10,7 +10,8 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private cookieService: CookieService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.cookieService.get('jwt')
+    // const token = this.cookieService.get('jwt')
+    const token = localStorage.getItem('access_token')
 
     if (token) {
       const clone = req.clone({

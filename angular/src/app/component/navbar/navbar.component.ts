@@ -13,16 +13,19 @@ export class NavbarComponent implements OnInit{
   id : any;
   islogedin: any; 
   data: any;
-  constructor(private Router : Router,public service:NodeService){}
+  constructor(private Router : Router,public service:NodeService){
+    this.Data = sessionStorage.getItem('user');
+    this.id = JSON.parse(this.Data);
+    console.log(this.id);
+    
+  }
 
   ngOnInit(): void {
     
-    this.Data = sessionStorage.getItem('user');
-    this.id = JSON.parse(this.Data);
+
   }
 
   viewUser(){
-    console.log(this.id); 
     this.Router.navigate(['/users/' + this.id._id]);  
   }
   logout(){

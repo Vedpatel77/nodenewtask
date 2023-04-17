@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     tokens:[{
         token:{
             type:String,
-            required:true
+            
         },
         refresh_token:{
             type:String
@@ -67,7 +67,7 @@ const BlogSchema = new mongoose.Schema({
 userSchema.methods.createtoken = async function() {
     try {
         const token = jwt.sign({_id:this._id.toString()},process.env.SECRET_KEY,{
-            expiresIn:"5s"
+            expiresIn:"14m"
         });
         const refresh_token = jwt.sign({_id:this._id.toString()},process.env.REFERSH_TOKEN_SECRET_KEY,{
             expiresIn:"30d"
@@ -76,7 +76,9 @@ userSchema.methods.createtoken = async function() {
         // console.log(token,"modal");
         this.tokens=this.tokens.concat({token:token,refresh_token:refresh_token})
         await this.save()
-        return {token,refresh_token};
+        // console.log(token,"gt");
+        // console.log(refresh_token,"gtz");
+    return {token,refresh_token};
     } catch (error) {
         console.log("the error part"+error);
     }

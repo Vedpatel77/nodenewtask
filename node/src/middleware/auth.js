@@ -5,7 +5,7 @@ const auth = async(req,res,next)=>{
     try {
 
         const token_header = req.header("Authorization").split(" ")[1];
-        console.log(token_header);
+        console.log(token_header,"header");
         if(isTokenExpired(token_header) === true){
           return res.status(419).send();
         }

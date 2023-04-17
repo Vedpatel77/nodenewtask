@@ -51,13 +51,11 @@ updateForm = new FormGroup({
 
    
    getusers(){
-    // this.onTableDataChange(event);
      this.service.getuser(this.page,this.tableSize).subscribe((res:any)=>{
-       this.users=res;
+      
+       this.users=res.user;
        this.count=res.length;
-       console.log(this.count);
        
-      //  this.users.paginator=this.paginator;
        if (res.statusCode == 400) {
          this.snakebar.open("somthing went wrong!",'retry',{
            duration:3000,

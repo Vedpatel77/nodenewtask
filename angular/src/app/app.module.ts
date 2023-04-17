@@ -22,6 +22,7 @@ import {CookieService} from 'ngx-cookie-service'
 import { MyblogComponent } from './component/myblog/myblog.component';
 import { NodeService } from './service/node.service';
 import { AuthInterceptorService } from './service/auth-interceptor.service';
+import { TokenInterceptor } from './service/token-interceptor';
 
 
 @NgModule({
@@ -55,6 +56,12 @@ import { AuthInterceptorService } from './service/auth-interceptor.service';
     {
       provide:HTTP_INTERCEPTORS,
       useClass:AuthInterceptorService,
+      multi:true
+    },
+    TokenInterceptor,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:TokenInterceptor,
       multi:true
     }
   ],
