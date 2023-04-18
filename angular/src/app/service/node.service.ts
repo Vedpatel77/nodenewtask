@@ -92,20 +92,21 @@ export class NodeService {
     }
     else {
       this.http.post('http://localhost:3000/login', Data, { withCredentials: true, observe: 'response', responseType: "json" }).subscribe((res: any) => {
-
+       console.log(res);
+       
         if (res.body.res.statusCode == 200) {
           this.loginuser = [res.body.user]
           console.log(this.loginuser);
 
             this.snakebar.open("login successfully!", '', {
-              duration: 3000,
+              duration: 2000,
               verticalPosition: 'top'
             })
             sessionStorage.setItem("user", JSON.stringify(this.loginuser[0]));
 
             localStorage.setItem("access_token", res.body.jwt.access_token);
             localStorage.setItem("referesh_token", res.body.jwt.refresh_token);
-            this.route.navigate(['/home']);
+            this.route.navigate(['/blogslist']);
           
         }
       }, (error) => {

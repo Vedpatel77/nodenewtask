@@ -9,4 +9,5 @@
 .blogtitle:hover{
     color: teal;
     cursor:pointer;
+    text-decoration: underline;
 }

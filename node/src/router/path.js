@@ -19,7 +19,7 @@ router.post('/login',controller.login);
 
 router.get('/tabledata',auth,controller.tabledata);
 
-router.get('/blogdata',auth,controller.Blogs);
+router.get('/blogdata',controller.Blogs);
 
 router.get('/myblog/:email',controller.myBlogs);
 

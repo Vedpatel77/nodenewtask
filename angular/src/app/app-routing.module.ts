@@ -18,7 +18,7 @@ const routes: Routes = [
   {path:'register',component:RegisterComponent},
   {path:'users',component:UsersComponent,canActivate:[CanactivateGuard]},
   {path:'users/:id',component:ViewuerComponent},
-  {path:'blogslist',component:BloglistComponent,canActivate:[CanactivateGuard]},
+  {path:'blogslist',component:BloglistComponent},
   {path:'viewblog',component:ViewblogComponent},
   {path:'myBlog',component:MyblogComponent},
   {path:'blogs/addblog',component:BlogsComponent,canActivate:[CanactivateGuard]}

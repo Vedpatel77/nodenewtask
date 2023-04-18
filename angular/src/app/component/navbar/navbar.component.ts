@@ -14,15 +14,14 @@ export class NavbarComponent implements OnInit{
   islogedin: any; 
   data: any;
   constructor(private Router : Router,public service:NodeService){
-    this.Data = sessionStorage.getItem('user');
-    this.id = JSON.parse(this.Data);
-    console.log(this.id);
+
     
   }
 
   ngOnInit(): void {
-    
-
+    this.Data = sessionStorage.getItem('user');
+    this.id = JSON.parse(this.Data);
+    console.log(this.id);
   }
 
   viewUser(){
