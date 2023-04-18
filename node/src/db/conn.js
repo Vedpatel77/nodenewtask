@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const url = 'mongodb://localhost:27017/bloguser';
+const url = process.env.DB_URL;
 
 mongoose.connect(url,{
     useNewUrlParser: true,
