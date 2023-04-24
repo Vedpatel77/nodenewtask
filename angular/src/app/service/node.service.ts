@@ -81,6 +81,10 @@ export class NodeService {
       return false;
     }
   }
+  // getuser(){
+  //   let user = sessionStorage.getItem('user');
+  //    = JSON.parse(this.Data);
+  // }
 
   login(Data: any) {
 
@@ -98,18 +102,23 @@ export class NodeService {
           this.loginuser = [res.body.user]
           console.log(this.loginuser);
 
-            this.snakebar.open("login successfully!", '', {
-              duration: 2000,
-              verticalPosition: 'top'
-            })
+          
             sessionStorage.setItem("user", JSON.stringify(this.loginuser[0]));
 
             localStorage.setItem("access_token", res.body.jwt.access_token);
             localStorage.setItem("referesh_token", res.body.jwt.refresh_token);
+
+            this.snakebar.open("login successfully!", 'okay', {
+              duration: 2000,
+              verticalPosition: 'top'
+            })
+            
             this.route.navigate(['/blogslist']);
           
         }
-      }, (error) => {
+      }, (error:any) => {
+        console.log(error);
+        
         if (error.status == 401) {
           this.snakebar.open("Invalid login!", '', {
             duration: 3000,

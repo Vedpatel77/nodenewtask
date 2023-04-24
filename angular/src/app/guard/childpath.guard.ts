@@ -13,7 +13,7 @@ export class ChildpathGuard implements CanActivate {
     if (this.service.isadmin() == true || this.service.iswritter() == true) {
       return true;
     } else {
-      this.snakebar.open("Plese login first!", 'retry', {
+      this.snakebar.open("Plese login first!", 'okay', {
         duration: 3000,
         verticalPosition: 'top'
       })

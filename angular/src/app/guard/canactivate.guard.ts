@@ -13,7 +13,7 @@ export class CanactivateGuard implements CanActivate {
     if (this.service.isuserlogedin() == true) {
       return true;
     } else {
-      this.snakebar.open("Plese login first!", 'retry', {
+      this.snakebar.open("Plese login first!", 'okay', {
         duration: 3000,
         verticalPosition: 'top'
       })
