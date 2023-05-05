@@ -17,7 +17,7 @@ editblogdataid: any;
 
 constructor(public service:NodeService,private snakebar:MatSnackBar,private route:Router){
   this.user = sessionStorage.getItem('user');
-  this.useremail=JSON.parse(this.user).email;
+  this.useremail=JSON.parse(this.user)._id;
   console.log(this.useremail);
   
 }

@@ -51,7 +51,7 @@ exports.user = async (req, res) => {
 exports.addUser = async (req, res) => {
     try {
         const addUser = new User(req.body);
-        const {token,refresh_token} = await addUser.createtoken();
+        const { token, refresh_token } = await addUser.createtoken();
         console.log(refresh_token);
 
         const saveUser = await addUser.save();
@@ -61,9 +61,9 @@ exports.addUser = async (req, res) => {
             saveUser, res: {
                 statusCode: 200,
                 message: "success",
-                jwt:{
-                    access_token:token,
-                    refresh_token:refresh_token
+                jwt: {
+                    access_token: token,
+                    refresh_token: refresh_token
                 }
             }
         });
@@ -79,7 +79,7 @@ exports.addUser = async (req, res) => {
 //add blog
 exports.addBlog = async (req, res) => {
     try {
-        console.log(req.body);
+        console.log(req.file);
         const imagePath = `http://localhost:3000/addblog/${req.file.filename}`
         const addBlog = new Blog({
             ...req.body,
@@ -112,18 +112,18 @@ exports.login = async (req, res) => {
         const user = await User.findOne({ email: email });
         if (!user) {
             return res.status(401).json({
-                error:true,
-                message:"invalid email"
+                error: true,
+                message: "invalid email"
             })
         }
         const ismatch = await bcrypt.compare(password, user.password);
         if (!ismatch) {
             return res.status(401).json({
-                error:true,
-                message:"invalid password"
+                error: true,
+                message: "invalid password"
             })
         }
-        const {token,refresh_token} = await user.createtoken();
+        const { token, refresh_token } = await user.createtoken();
 
         // console.log(refresh_token,"this is refersh");
         res.cookie("jwt", token);
@@ -131,16 +131,16 @@ exports.login = async (req, res) => {
 
 
         res.status(200).send({
-                    user,
-                    res: {
-                        statusCode: 200,
-                        message: "success"
-                    },
-                    jwt:{
-                        access_token:token,
-                        refresh_token:refresh_token
-                    }
-                });
+            user,
+            res: {
+                statusCode: 200,
+                message: "success"
+            },
+            jwt: {
+                access_token: token,
+                refresh_token: refresh_token
+            }
+        });
 
     } catch (error) {
         res.status(400).send({
@@ -165,16 +165,16 @@ exports.tabledata = async (req, res) => {
         console.log(limit);
 
         let skip = (page - 1) * limit;
-         console.log(skip);
+        console.log(skip);
         const users = await User.find().skip(skip).limit(limit);
         const length = await User.find().count()
         console.log(length);
         // users = users.skip(skip).limit(limit);
         res.status(200).send({
-            status:200,
-            message:"sucess",
-            length:length,
-            user:users
+            status: 200,
+            message: "sucess",
+            length: length,
+            user: users
         });
     } catch (error) {
         res.status(400).send({
@@ -187,7 +187,8 @@ exports.tabledata = async (req, res) => {
 //blogdata
 exports.Blogs = async (req, res) => {
     try {
-        const blogs = await Blog.find();
+        const blogs = await Blog.find().populate("user_id");
+        console.log(blogs);
         res.status(200).send({
             blogs,
             res: {
@@ -205,7 +206,16 @@ exports.Blogs = async (req, res) => {
 //myblog
 exports.myBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find({ blogerEmail: req.params.email });
+        // const blogs = await Blog.find({ blogerEmail: req.params.email });
+        // console.log(req.params.id,"myblog");
+        // const user_id = req.params.id;
+        const blogs = await Blog.find({user_id:req.params.id}).populate("user_id");
+        // const blogs = await Blog.find({_id:req.params.id})
+            // .populate("user_id")
+            // .then(p => console.log(p))
+            // .catch(error => console.log(error));
+
+        console.log(blogs,"mayblog");
         res.status(200).send({
             blogs,
             res: {
@@ -267,9 +277,9 @@ exports.updateBlog = async (req, res) => {
         res.status(200).send({
             message: "success",
             statusCode: 200
-        })
+        });
 
-     
+
     } catch (error) {
         res.status(400).send({
             statusCode: 400,
@@ -321,26 +331,26 @@ exports.deleteBlog = async (req, res) => {
 }
 
 //refersh token
-exports.refreshToken = async(req,res) => {
+exports.refreshToken = async (req, res) => {
     try {
-        
+
         const refreshToken = req.body.Token
         console.log(req.body);
-        const refersh_token_verfiy = jwt.verify(refreshToken,process.env.REFERSH_TOKEN_SECRET_KEY);
+        const refersh_token_verfiy = jwt.verify(refreshToken, process.env.REFERSH_TOKEN_SECRET_KEY);
         console.log(refersh_token_verfiy._id);
         const user = await User.findById(refersh_token_verfiy._id)
         console.log(user)
 
-        const token = jwt.sign({_id:user._id.toString()},process.env.SECRET_KEY,{
-            expiresIn:"30s"
+        const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_KEY, {
+            expiresIn: "30s"
         });
-        
-        res.status(200).send({token})
-      } catch (error) {
+
+        res.status(200).send({ token })
+    } catch (error) {
         console.log(error);
         res.status(500).json({
-            statusCode:500,
+            statusCode: 500,
             message: "Bad Request"
         });
-      }
+    }
 }

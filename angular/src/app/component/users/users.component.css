@@ -1,6 +1,7 @@
 .table th {
     font-weight: 500;
     background-color: teal;
+    color:whitesmoke;
 }
 .pagination{
     position: absolute;

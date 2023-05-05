@@ -4,4 +4,5 @@ export class data{
     blogTitle:string='';
     blogsummary:string='';
     blogDescription:string='';
+    userid:string='';
   }

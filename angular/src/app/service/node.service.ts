@@ -87,6 +87,7 @@ export class NodeService {
   // }
 
   login(Data: any) {
+// console.log(Data,"login");
 
     if (Data.email === '' && Data.password === '') {
       this.snakebar.open("Please Check The Field!", '', {
@@ -96,7 +97,7 @@ export class NodeService {
     }
     else {
       this.http.post('http://localhost:3000/login', Data, { withCredentials: true, observe: 'response', responseType: "json" }).subscribe((res: any) => {
-       console.log(res);
+      //  console.log(res,"abc");
        
         if (res.body.res.statusCode == 200) {
           this.loginuser = [res.body.user]
@@ -112,6 +113,7 @@ export class NodeService {
               duration: 2000,
               verticalPosition: 'top'
             })
+            // alert("login successful");
             
             this.route.navigate(['/blogslist']);
           
@@ -145,8 +147,9 @@ export class NodeService {
     return this.http.get(`http://localhost:3000/tabledata?page=${page}&limit=${limit}`);
   }
   
-  getuserblog(userEmail: any) {
-    return this.http.get('http://localhost:3000/myblog/' + userEmail);
+  getuserblog(id: any) {
+    
+    return this.http.get('http://localhost:3000/myblog/'+id);
   }
 
   getblog() {
@@ -159,15 +162,15 @@ export class NodeService {
 
   addblog(blog: any, image: any) {
     let testData: FormData = new FormData();
-    // console.log(image);
+    console.log(blog);
 
 
     testData.append('blogerEmail', blog.blogerEmail);
     testData.append('blogTitle', blog.blogTitle);
     testData.append('blogsummary', blog.blogsummary);
     testData.append('blogDescription', blog.blogDescription);
+    testData.append('user_id', blog.userid);
     testData.append('imageFile', image);
-    console.log(testData);
 
 
     return this.http.post('http://localhost:3000/addblog', testData);

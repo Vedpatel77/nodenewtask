@@ -21,7 +21,7 @@ router.get('/tabledata',auth,controller.tabledata);
 
 router.get('/blogdata',controller.Blogs);
 
-router.get('/myblog/:email',controller.myBlogs);
+router.get('/myblog/:id',controller.myBlogs);
 
 router.patch('/users/:id',controller.updateUser);
 

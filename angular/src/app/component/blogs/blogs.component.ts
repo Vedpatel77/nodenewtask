@@ -14,6 +14,8 @@ import { data } from './data.model';
 export class BlogsComponent implements OnInit{
 
   blogdata!: FormGroup;
+  user:any;
+  userid:any;
   file:any;
   dataObj: data = new data();
 // blogd:any;
@@ -31,6 +33,10 @@ imageData!: string;
       blogDescription: [''],
       imageFile:['']
     });
+    this.user = sessionStorage.getItem('user');
+    this.userid = JSON.parse(this.user)._id;
+    console.log(this.userid);
+    
   }
 
   // blogdata = new FormGroup({
@@ -46,6 +52,7 @@ imageData!: string;
       this.dataObj.blogTitle=this.blogdata.value.blogTitle;
       this.dataObj.blogsummary=this.blogdata.value.blogsummary;
       this.dataObj.blogDescription=this.blogdata.value.blogDescription;
+      this.dataObj.userid=this.userid;
     // let data={imageFile:this.imageFileblogdata
       this.service.addblog(this.dataObj, this.file).subscribe((res:any)=>{
         // this.blogd=res;

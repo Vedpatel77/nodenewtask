@@ -58,10 +58,16 @@ const BlogSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    user_id: {
+        type: String,
+        ref: "User"
+    },
     imageFile:{
         type:String,
         required:true
     }
+},{
+    timestamps:true
 });
 
 userSchema.methods.createtoken = async function() {

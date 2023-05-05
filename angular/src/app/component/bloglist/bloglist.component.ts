@@ -49,7 +49,6 @@ export class BloglistComponent implements OnInit {
   isadmin() {
     this.data = sessionStorage.getItem('user');
     this.Odata = JSON.parse(this.data);
-    console.log(this.Odata);
     if (this.Odata === null) {
       return false;
     } else if (this.Odata.role === "admin") {

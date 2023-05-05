@@ -1,4 +1,3 @@
-
 <div class="container">
     <h1 class="text-center mt-5 mb-5 text-decoration-underline">Today's famous Blogs</h1>
     <div *ngFor="let blog of blogdata" class="row mb-3 blog">
@@ -10,12 +9,17 @@
                 {{blog.blogTitle}}</h3>
             <h4 class="text-secondary">{{blog.blogsummary}}</h4>
         </div>
-        <div class="col-lg-2 col-md-12 col-sm-12" *ngIf="isadmin()">
-            <button type="button" class="btn btn-primary mx-2" data-mdb-toggle="modal" data-mdb-target="#exampleModal"
-                (click)="editblog(blog)">
+        <div class="col-lg-2 col-md-12 col-sm-12 d-flex h-100" *ngIf="isadmin()">
+            <button type="button" class="btn btn-primary mx-2 h-25" data-mdb-toggle="modal"
+                data-mdb-target="#exampleModal" (click)="editblog(blog)">
                 <i class="fa-solid fa-pen-to-square"></i>
             </button>
-            <button class="btn btn-danger" (click)="deleteblog(blog)"><i class="fa-solid fa-trash-can"></i></button>
+            <button class="btn btn-danger h-25" (click)="deleteblog(blog)"><i
+                    class="fa-solid fa-trash-can"></i></button>
+        </div>
+        <div class="row mt-2">
+            <span class="w-50">{{blog.createdAt | date :'h'}} hours ago</span><span class="text-end w-50">Uploaded By-
+                {{blog.user_id.firstName}}</span>
         </div>
     </div>
 </div>
@@ -49,7 +53,8 @@
                     <!-- phone number -->
                     <div class="mb-2">
                         <label class="form-label" for="customFile">Choose your image</label>
-                         <input (change)="onFileSelected($event)" formControlName="imageFile" type="file" class="form-control" id="customFile" />
+                        <input (change)="onFileSelected($event)" formControlName="imageFile" type="file"
+                            class="form-control" id="customFile" />
                     </div>
                 </form>
             </div>
